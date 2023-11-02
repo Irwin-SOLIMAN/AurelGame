@@ -1,0 +1,41 @@
+
+.playArea{
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .PlayBtnArea{
+        margin-top:0vw;
+    }
+    
+    
+    .calculArea {
+        margin-top:10vw;
+        display:flex;
+        width:30vw;
+        justify-content: space-between;
+    
+        .rightAsnwer{
+            background-color: green;
+        }
+    
+        .badAnswer{
+            background-color: red;
+        }
+    }
+    
+    .choiceNumberArea{
+        margin-top:10vw;
+        display:flex;
+        flex-wrap: wrap;
+        width:30vw;
+        justify-content: space-between;
+    }
+
+
+}
+

@@ -1,15 +1,18 @@
-import DifficultyArea from "../components/DifficultyArea";
-// import numberTable from "../components/numberTable";
 import { useState } from "react";
 import PlayArea from "../components/PlayArea";
+import Setting from "../components/Setting";
 
 const Game1 = () => {
-  const [difficulty, setDifficulty] = useState(undefined);
+  const [range, setRange] = useState(15);
+  const [length, setLength] = useState (10);
+  const [type, setType] = useState (undefined);
+  const [operator, setOperator] = useState (undefined);
+
 
   return (
     <div className="game1">
-      <DifficultyArea setDifficulty={setDifficulty} difficulty={difficulty} />
-      <PlayArea difficulty={difficulty} />
+      <Setting setRange={setRange} length={length} type={type} operator={operator} range={range} setLength={setLength} setType={setType} setOperator={setOperator}  />
+      <PlayArea range={range} length={length} type={type} operator = {operator} />
     </div>
   );
 };

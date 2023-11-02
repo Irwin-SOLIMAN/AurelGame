@@ -1,0 +1,27 @@
+.Setting {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    color : white;
+    font-size: 1.1rem;
+    font-family: 'ADLaM Display';
+
+    .Type, .Operator, .Range, .Length{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        align-items: center;
+
+        div, button{
+            margin:13px;
+        }
+
+        label{
+            margin: 13px;
+        }
+        
+    }
+
+
+}

@@ -3,41 +3,54 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { uid } from "uid"; //pre-requis : npm install uid
 
-function PlayArea({ difficulty }) {
+function PlayArea({range, length, operator, type}) {
   const [otherProposalState, setotherProposalState] = useState([]);
   const [numberDeltaState, setNumberDeltaState] = useState(0);
   const [finalNumberState, setfinalNumberState] = useState(0);
   const [numberToGuessState, setnumberToGuessState] = useState(0);
   const [playerchoicednumber, setplayerchoicednumber] = useState("?");
-  let requestLength = 0;
-  let range = 0;
+  
+ 
+  console.log(length);
+  console.log(range)
 
   function calcul() {
     let otherproposal = [];
-    // selon la difficulté choisi, on applique une range (ex chiffre de 0 à 10 et une requestLength exemple 5 autres proposition)
-    if (difficulty === 1) {
-      requestLength = 5;
-      range = 10;
-    } else if (difficulty === 2) {
-      requestLength = 10;
-      range = 20;
-    } else if (difficulty === 3) {
-      requestLength = 20;
-      range = 50;
-    } else if (difficulty === 4) {
-      requestLength = 30;
-      range = 100;
-    }
 
+    console.log(length);
+    console.log(range);
+    
     // ici on calcul les valeurs du jeu (de manière aléatoire mais selon range choisi par l'utilisateur via la difficulté)
 
-    const finalNumber = Math.ceil(Math.random() * range); //Exemple 10
-    const numberToGuess = Math.ceil(Math.random() * range); //Exemple 4
-    const NumberDelta = finalNumber - numberToGuess; // Exemple 6
+
+    let numberDelta = 0
+    let finalNumber = 0
+    let numberToGuess = 0
+
+    if (operator === "+") {
+      finalNumber = Math.ceil(Math.random() * range); //Exemple 10
+      numberToGuess = Math.ceil(Math.random() * range); //Exemple 4
+      numberDelta = finalNumber - numberToGuess; // Exemple 6
+    }
+
+    else if (operator === "-") {
+      finalNumber = Math.ceil(Math.random() * range); //Exemple 10
+      numberDelta = Math.ceil(Math.random() * range); //Exemple 20
+      do {
+        numberDelta = Math.ceil(Math.random() * range);
+      } while (numberDelta <= finalNumber)
+      numberToGuess =  numberDelta - finalNumber;
+
+    }
+      
+
+    
+  
+    
 
     // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
 
-    for (let i = 0; i < requestLength; i++) {
+    for (let i = 0; i < length; i++) {
       let number = Math.ceil(Math.random() * range);
       const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
       if (check) {
@@ -49,27 +62,29 @@ function PlayArea({ difficulty }) {
 
     const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
     if (!check) {
-      const randomsplice = Math.ceil(Math.random() * (requestLength - 1)); //on détermine un nombre aléatoire (dans la plage de la longeur des choix). le -1 car l'index des tableau commence à 0
+      const randomsplice = Math.ceil(Math.random() * (length - 1)); //on détermine un nombre aléatoire (dans la plage de la longeur des choix). le -1 car l'index des tableau commence à 0
       console.log("le nombre randoomsplice :" + randomsplice);
       otherproposal.splice(randomsplice, 1, numberToGuess); // on retire une des propositions aélatoire du tableau pour y intégrer notre solution
     }
 
     setfinalNumberState(finalNumber);
     setnumberToGuessState(numberToGuess);
-    setNumberDeltaState(NumberDelta);
+    setNumberDeltaState(numberDelta);
     setotherProposalState(otherproposal);
+  
   }
 
   return (
+
+    
     <div className="playArea">
-      {difficulty != undefined && ( //génère le bouton Play si un choix de difficulté à été fait
+      {(operator && type) && (
         <div className="PlayBtnArea">
           <button type="button" className="btnStyle1" onClick={() => calcul()}>
             PLAY
           </button>
-        </div>
-      )}
-
+        </div>)}
+      
       {numberToGuessState != 0 && (
         <div className="calculArea">
           <div className="">
@@ -77,9 +92,9 @@ function PlayArea({ difficulty }) {
               {numberDeltaState}
             </button>
           </div>
-          <div className="">
+          <div className="operator">
             <button type="button" className="btnStyle1">
-              +
+              {operator}
             </button>
           </div>
           <div className="">
@@ -128,8 +143,13 @@ function PlayArea({ difficulty }) {
     </div>
   );
 }
+
+
 PlayArea.propTypes = {
-  difficulty: PropTypes.number,
-};
+  range: PropTypes.number,
+  length : PropTypes.number,
+  operator: PropTypes.string,
+  type : PropTypes.string,
+}
 
 export default PlayArea;

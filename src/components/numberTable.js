@@ -1,53 +1,53 @@
 const numberTable = [
     {
         number: "1",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "one/un"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "one/un",
     },
     {
         number: "2",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "two/deux"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "two/deux",
     },
     {
         number: "3",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "three/trois"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "three/trois",
     },
     {
         number: "4",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "four/quatre"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "four/quatre",
     },
     {
         number: "5",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "five/cinq"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "five/cinq",
     },
     {
         number: "6",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "six/six"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "six/six",
     },
     {
         number: "7",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "seven/sept"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "seven/sept",
     },
     {
         number: "8",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "eight/huit"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "eight/huit",
     },
     {
         number: "9",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "nine/neuf"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "nine/neuf",
     },
     {
         number: "10",
-        numberImg: "images/xxxxxxx.jpg",
-        numberText: "ten/dix"
+        numberImg: "./public/images/Cocinelle.png",
+        numberText: "ten/dix",
     }
 ];
 

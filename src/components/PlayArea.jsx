@@ -2,54 +2,40 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { uid } from "uid"; //pre-requis : npm install uid
+import numberTable from "./numberTable";
 
-function PlayArea({range, length, operator, type}) {
+function PlayArea({ range, length, operator, type }) {
   const [otherProposalState, setotherProposalState] = useState([]);
   const [numberDeltaState, setNumberDeltaState] = useState(0);
   const [finalNumberState, setfinalNumberState] = useState(0);
   const [numberToGuessState, setnumberToGuessState] = useState(0);
   const [playerchoicednumber, setplayerchoicednumber] = useState("?");
-  
- 
-  console.log(length);
-  console.log(range)
 
   function calcul() {
     let otherproposal = [];
 
-    console.log(length);
-    console.log(range);
-    
     // ici on calcul les valeurs du jeu (de manière aléatoire mais selon range choisi par l'utilisateur via la difficulté)
 
-
-    let numberDelta = 0
-    let finalNumber = 0
-    let numberToGuess = 0
+    let numberDelta = 0;
+    let finalNumber = 0;
+    let numberToGuess = 0;
 
     if (operator === "+") {
       finalNumber = Math.ceil(Math.random() * range); //Exemple 10
       numberToGuess = Math.ceil(Math.random() * range); //Exemple 4
       numberDelta = finalNumber - numberToGuess; // Exemple 6
-    }
-
-    else if (operator === "-") {
+    } else if (operator === "-") {
       finalNumber = Math.ceil(Math.random() * range); //Exemple 10
       numberDelta = Math.ceil(Math.random() * range); //Exemple 20
       do {
         numberDelta = Math.ceil(Math.random() * range);
-      } while (numberDelta <= finalNumber)
-      numberToGuess =  numberDelta - finalNumber;
-
+      } while (numberDelta <= finalNumber);
+      numberToGuess = numberDelta - finalNumber;
     }
-      
-
-    
-  
-    
 
     // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
-
+    console.log("la length :");
+    console.log(length);
     for (let i = 0; i < length; i++) {
       let number = Math.ceil(Math.random() * range);
       const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
@@ -71,20 +57,17 @@ function PlayArea({range, length, operator, type}) {
     setnumberToGuessState(numberToGuess);
     setNumberDeltaState(numberDelta);
     setotherProposalState(otherproposal);
-  
   }
 
   return (
-
-    
     <div className="playArea">
-      {(operator && type) && (
+      {operator && type && (
         <div className="PlayBtnArea">
           <button type="button" className="btnStyle1" onClick={() => calcul()}>
             PLAY
           </button>
-        </div>)}
-      
+        </div>
+      )}
       {numberToGuessState != 0 && (
         <div className="calculArea">
           <div className="">
@@ -134,7 +117,17 @@ function PlayArea({range, length, operator, type}) {
                 value={element}
                 onClick={(e) => setplayerchoicednumber(e.target.value)}
               >
-                {element}
+                {type === "number"
+                  ? element
+                  : type === "letter"
+                  ? numberTable[element].numberText
+                  : type === "image" && (
+                      <img
+                        className="numberimage"
+                        src={numberTable[element].numberImg}
+                        alt=""
+                      />
+                    )}
               </button>
             </div>
           );
@@ -144,12 +137,11 @@ function PlayArea({range, length, operator, type}) {
   );
 }
 
-
 PlayArea.propTypes = {
   range: PropTypes.number,
-  length : PropTypes.number,
+  length: PropTypes.number,
   operator: PropTypes.string,
-  type : PropTypes.string,
-}
+  type: PropTypes.string,
+};
 
 export default PlayArea;

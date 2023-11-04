@@ -70,17 +70,17 @@ function PlayArea({ range, length, operator, type }) {
       )}
       {numberToGuessState != 0 && (
         <div className="calculArea">
-          <div className="">
+          <div className="topArea">
             <button type="button" className="btnStyle1">
               {numberDeltaState}
             </button>
           </div>
-          <div className="operator">
+          <div className="operator topArea">
             <button type="button" className="btnStyle1">
               {operator}
             </button>
           </div>
-          <div className="">
+          <div className="topArea">
             <button
               type="button"
               className={
@@ -94,12 +94,12 @@ function PlayArea({ range, length, operator, type }) {
               {playerchoicednumber}
             </button>
           </div>
-          <div className="">
+          <div className="topArea">
             <button type="button" className="btnStyle1">
               =
             </button>
           </div>
-          <div className="">
+          <div className="topArea">
             <button type="button" className="btnStyle1">
               {finalNumberState}
             </button>
@@ -110,11 +110,11 @@ function PlayArea({ range, length, operator, type }) {
       <div className="choiceNumberArea">
         {otherProposalState.map((element) => {
           return (
-            <div className="" key={uid(10)}>
+            <div className="numberChoiceButton" key={uid(10)}>
               <button
                 className="btnStyle1"
                 type="button"
-                value={element}
+                value={type != "number" ? element+1 : element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
                 onClick={(e) => setplayerchoicednumber(e.target.value)}
               >
                 {type === "number"
@@ -126,6 +126,9 @@ function PlayArea({ range, length, operator, type }) {
                         className="numberimage"
                         src={numberTable[element].numberImg}
                         alt=""
+                        value={type != "number" ? element+1 : element}
+                        // onClick={ () => alert("coucou!")}
+                        onClick={(e) => setplayerchoicednumber(e.target.value)}
                       />
                     )}
               </button>

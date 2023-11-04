@@ -3,8 +3,8 @@ import PlayArea from "../components/PlayArea";
 import Setting from "../components/Setting";
 
 const Game1 = () => {
-  const [range, setRange] = useState(5);
-  const [length, setLength] = useState(5);
+  const [range, setRange] = useState(7);
+  const [length, setLength] = useState(7);
   const [type, setType] = useState(undefined);
   const [operator, setOperator] = useState(undefined);
 

@@ -9,34 +9,48 @@
     flex-direction: column;
 
     .PlayBtnArea{
-        margin-top:0vw;
+        margin-top:5vw;
+        margin-left:25px;
     }
     
     
     .calculArea {
-        margin-top:10vw;
+        margin-top:7vw;
         display:flex;
         width:30vw;
         justify-content: space-between;
     
-        .rightAsnwer{
-            background-color: green;
+        .topArea{
+            margin-right: 25px;
+
+
+            .rightAsnwer{
+                background-color: green;
+            }
+        
+            .badAnswer{
+                background-color: red;
+            }
         }
-    
-        .badAnswer{
-            background-color: red;
-        }
+
+
     }
     
     .choiceNumberArea{
-        margin-top:10vw;
+        margin-top:7vw;
         display:flex;
         flex-wrap: wrap;
-        width:30vw;
-        justify-content: space-between;
+        width:80%;
+        justify-content: center;
 
-        .numberimage {
-            width: 100px;
+        .numberChoiceButton{ 
+            margin:10px;
+         }
+
+         .numberimage {
+            padding: 5px;
+            width: 150px;
+            height:180px;
         }
     }
 

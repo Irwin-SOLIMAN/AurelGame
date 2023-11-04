@@ -4,7 +4,7 @@ import { useState } from "react";
 import { uid } from "uid"; //pre-requis : npm install uid
 import numberTable from "./numberTable";
 
-function PlayArea({ range, length, operator, type }) {
+function PlayArea({ range, length, operator, type, winCounter, setWinCounter }) {
   const [otherProposalState, setotherProposalState] = useState([]);
   const [numberDeltaState, setNumberDeltaState] = useState(0);
   const [finalNumberState, setfinalNumberState] = useState(0);
@@ -57,6 +57,15 @@ function PlayArea({ range, length, operator, type }) {
     setnumberToGuessState(numberToGuess);
     setNumberDeltaState(numberDelta);
     setotherProposalState(otherproposal);
+
+  }
+
+  function scoreBoard(e) {
+    setplayerchoicednumber(e.target.value);
+    {if (playerchoicednumber == numberToGuessState) {
+      setWinCounter(winCounter+1)
+      calcul()}
+    } 
   }
 
   return (
@@ -115,7 +124,7 @@ function PlayArea({ range, length, operator, type }) {
                 className="btnStyle1"
                 type="button"
                 value={type != "number" ? element+1 : element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
-                onClick={(e) => setplayerchoicednumber(e.target.value)}
+                onClick={(e) => scoreBoard(e)}
               >
                 {type === "number"
                   ? element
@@ -128,7 +137,7 @@ function PlayArea({ range, length, operator, type }) {
                         alt=""
                         value={type != "number" ? element+1 : element}
                         // onClick={ () => alert("coucou!")}
-                        onClick={(e) => setplayerchoicednumber(e.target.value)}
+                        onClick={(e) => scoreBoard(e)}
                       />
                     )}
               </button>
@@ -145,6 +154,8 @@ PlayArea.propTypes = {
   length: PropTypes.number,
   operator: PropTypes.string,
   type: PropTypes.string,
+  winCounter: PropTypes.number,
+  setWinCounter : PropTypes.number,
 };
 
 export default PlayArea;

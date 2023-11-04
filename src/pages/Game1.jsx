@@ -7,6 +7,7 @@ const Game1 = () => {
   const [length, setLength] = useState(7);
   const [type, setType] = useState(undefined);
   const [operator, setOperator] = useState(undefined);
+  const [winCounter, setWinCounter] = useState(0)
 
   return (
     <div className="game1">
@@ -20,7 +21,10 @@ const Game1 = () => {
         setType={setType}
         setOperator={setOperator}
       />
-      <PlayArea range={range} length={length} type={type} operator={operator} />
+      <PlayArea range={range} length={length} type={type} operator={operator} setWinCounter={setWinCounter} winCounter={winCounter}/>
+      <div className ="scoreBoard">
+        {winCounter}
+      </div>
     </div>
   );
 };

@@ -11,26 +11,41 @@ const Game1 = () => {
 
   return (
     <div className="game1">
-      <Setting
-        setRange={setRange}
-        proposallength={proposallength}
-        type={type}
-        operator={operator}
-        range={range}
-        setproposallength={setproposallength}
-        setType={setType}
-        setOperator={setOperator}
-        winCounter={winCounter}
-      />
-      <PlayArea
-        range={range}
-        proposallength={proposallength}
-        type={type}
-        operator={operator}
-        setWinCounter={setWinCounter}
-        winCounter={winCounter}
-      />
-      <div className="scoreBoard">{winCounter}</div>
+      <div className="leftArea">
+        <Setting
+          setRange={setRange}
+          proposallength={proposallength}
+          type={type}
+          operator={operator}
+          range={range}
+          setproposallength={setproposallength}
+          setType={setType}
+          setOperator={setOperator}
+          winCounter={winCounter}
+        />
+      </div>
+      <div className="centerArea">
+        <div className="playAreaComponent" > 
+          <PlayArea
+            setRange={setRange}
+            range={range}
+            proposallength={proposallength}
+            setproposallength={setproposallength}
+            type={type}
+            setType={setType}
+            operator={operator}
+            setOperator={setOperator}
+            setWinCounter={setWinCounter}
+            winCounter={winCounter}
+          />
+        </div>
+        <div className="scoreBoard">
+          {winCounter != undefined &&
+            <progress value={winCounter === undefined ? 0 : winCounter} max={5} />
+          }
+          
+        </div>
+      </div>
     </div>
   );
 };

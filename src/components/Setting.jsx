@@ -31,7 +31,7 @@ const Setting = ({
 
   return (
     <>
-      {(winCounter === undefined || winCounter === 5) && (
+      {(winCounter === undefined) && (
         <div className="Setting">
           <div className="Type">
             <div className="text">Type : </div>

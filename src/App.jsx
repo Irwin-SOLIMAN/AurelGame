@@ -1,12 +1,14 @@
 import Game1 from "./pages/Game1";
 
 function App() {
+  
+  window.addEventListener("error", (error) => {
+    console.error("Erreur non gérée : ", error);
+  });
   return (
     <div className="App">
-      <div>
-        <Game1 />
+          <Game1 />
       </div>
-    </div>
   );
 }
 

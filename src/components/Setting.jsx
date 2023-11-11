@@ -134,7 +134,7 @@ const Setting = ({
                   id="range"
                   name="range"
                   value={range}
-                  min="0"
+                  min="1"
                   max={type !== "number" ? "12" : "100"}
                   step="1"
                   onChange={(e) => {
@@ -151,7 +151,7 @@ const Setting = ({
                   id="Length"
                   name="Length"
                   value={proposallength}
-                  min="0"
+                  min="1"
                   // max={type !== "number" ? "10" : "100"}
                   max={range}
                   step="1"

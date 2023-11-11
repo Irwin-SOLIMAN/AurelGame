@@ -41,7 +41,7 @@ const Game1 = () => {
         </div>
         <div className="scoreBoard">
           {winCounter != undefined &&
-            <progress value={winCounter === undefined ? 0 : winCounter} max={5} />
+            <progress className="progressBar" value={winCounter === undefined ? 0 : winCounter} max={5} />
           }
           
         </div>

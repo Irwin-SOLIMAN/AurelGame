@@ -26,9 +26,18 @@ function PlayArea({
 
 
     function FireWorkFunction() {
-      const container = document.querySelector('.App')
+      const container = document.querySelector('.game1')
       const fireworks = new Fireworks(container, { /* options */ })
       fireworks.start()
+      setWinCounter(undefined)
+      setType(undefined)
+      setOperator(undefined)
+      setproposallength(7)
+      setRange(7)
+      setfinalNumberState(0);
+      setnumberToGuessState(0);
+      setNumberDeltaState(0);
+      setotherProposalState(0);
         setTimeout(() => {
           fireworks.stop()
       },10000)
@@ -45,26 +54,31 @@ function PlayArea({
       let finalNumber = 0;
       let numberToGuess = 0;
 
+      do {
+      finalNumber = Math.ceil(Math.random() * range); //Exemple 10
+    } while (finalNumber <= 1); //Exemple 4
+      console.log("début calcul nombre (final number, nomber to guess")
       if (operator === "+") {
-        finalNumber = Math.ceil(Math.random() * range); //Exemple 10
+        
+        console.log("finalNumber : " + finalNumber)
         do {
           numberToGuess = Math.ceil(Math.random() * range);
-        } while (numberToGuess >= finalNumber); //Exemple 4
+          console.log("numberToGuess :" + numberToGuess)
+        } while (numberToGuess > finalNumber); //Exemple 4
         numberDelta = finalNumber - numberToGuess; // Exemple 6
       } else if (operator === "-") {
-        finalNumber = Math.ceil(Math.random() * range); //Exemple 10
         numberDelta = Math.ceil(Math.random() * range); //Exemple 20
         do {
           numberDelta = Math.ceil(Math.random() * range);
-        } while (numberDelta <= finalNumber);
+        } while (numberDelta < finalNumber);
         numberToGuess = numberDelta - finalNumber;
       }
-
-      console.log(numberToGuess)
+      console.log("fin calcul nombre (final number, nomber to guess")
+     
 
       // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
-      console.log("la length :");
-      console.log(proposallength);
+      
+      console.log("debut boucle tableau otherproposal");
       for (let i = 0; i < proposallength; i++) {
         let number = Math.ceil(Math.random() * range);
         const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
@@ -74,6 +88,7 @@ function PlayArea({
           otherproposal.push(number); //sinon, on met ce nouveau chiffre dans le tableau
         }
       }
+      console.log("Fin boucle tableau otherproposal");
 
       const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
       if (!check) {
@@ -101,17 +116,6 @@ function PlayArea({
             }
             else {
               FireWorkFunction()  
-              setTimeout(() => {
-                setWinCounter(undefined)
-                setType(undefined)
-                setOperator(undefined)
-                setproposallength(7)
-                setRange(7)
-                setfinalNumberState(0);
-                setnumberToGuessState(0);
-                setNumberDeltaState(0);
-                setotherProposalState(0);
-              },10000)
              }
         }
       }

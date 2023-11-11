@@ -46,11 +46,21 @@
         .numberChoiceButton{ 
             margin:10px;
          }
+            .numberimage {
+                margin: 5px;
+                width: 150px;
+                height:180px;
+                border-radius: 10px;
+                background-color: rgb(63, 125, 167);
+                box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+                inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    
+                &:hover {
+                    background-color: var(--main-color);
+                }
 
-         .numberimage {
-            padding: 5px;
-            width: 150px;
-            height:180px;
+        
+ 
         }
     }
 

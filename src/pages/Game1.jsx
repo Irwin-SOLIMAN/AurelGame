@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PlayArea from "../components/PlayArea";
 import Setting from "../components/Setting";
+import { motion, animate } from "framer-motion";
 
 const Game1 = () => {
   const [range, setRange] = useState(7);
@@ -8,6 +9,7 @@ const Game1 = () => {
   const [type, setType] = useState(undefined);
   const [operator, setOperator] = useState(undefined);
   const [winCounter, setWinCounter] = useState(undefined);
+  const [gamesStatus, setGameStatus] = useState(false);
 
   return (
     <div className="game1">
@@ -22,10 +24,12 @@ const Game1 = () => {
           setType={setType}
           setOperator={setOperator}
           winCounter={winCounter}
+          gamesStatus={gamesStatus}
+          setGameStatus={setGameStatus}
         />
       </div>
       <div className="centerArea">
-        <div className="playAreaComponent" > 
+        <div className="playAreaComponent">
           <PlayArea
             setRange={setRange}
             range={range}
@@ -37,13 +41,26 @@ const Game1 = () => {
             setOperator={setOperator}
             setWinCounter={setWinCounter}
             winCounter={winCounter}
+            gamesStatus={gamesStatus}
+            setGameStatus={setGameStatus}
           />
         </div>
         <div className="scoreBoard">
-          {winCounter != undefined &&
-            <progress className="progressBar" value={winCounter === undefined ? 0 : winCounter} max={5} />
-          }
-          
+          {winCounter != undefined && gamesStatus && (
+            <div className="winBarContainer">
+              <div className="levelwinBar">
+                <motion.div
+                  className="bar"
+                  animate={{
+                    width: `${winCounter * 20}%`,
+                  }}
+                  transition={{
+                    duration: 1,
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

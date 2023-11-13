@@ -1,6 +1,7 @@
 // import DifficultyArea from "../components/DifficultyArea";
 // import { useState } from "react";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 const Setting = ({
   setRange,
@@ -12,17 +13,36 @@ const Setting = ({
   type,
   operator,
   winCounter,
+  gamesStatus,
 }) => {
-  function handleChoiceType(e) {
-    setType(e.target.value);
+  // function handleChoiceType(e) {
+  //   setType(e.target.value);
+  //   if (type != "number") {
+  //     console.log("step before", range);
+  //     if (range > 12) {
+  //       console.log("range 12 max detected", range);
+  //       setRange(12);
+  //     }
+  //     if (proposallength > 12) {
+  //       setproposallength(12);
+  //     }
+  //   }
+  // }
+
+  useEffect(() => {
+    // Ensure range and proposallength are within bounds
     if (type != "number") {
       if (range > 12) {
         setRange(12);
       }
-      if (proposallength > 12) {
-        setproposallength(12);
-      }
     }
+    if (proposallength > range) {
+      setproposallength(range);
+    }
+  }, [type, range, proposallength, setRange, setproposallength]);
+
+  function handleChoiceType(e) {
+    setType(e.target.value);
   }
 
   function handleChoiceOperator(e) {
@@ -31,7 +51,7 @@ const Setting = ({
 
   return (
     <>
-      {(winCounter === undefined) && (
+      {winCounter === undefined && !gamesStatus && (
         <div className="Setting">
           <div className="Type">
             <div className="text">Type : </div>
@@ -138,9 +158,8 @@ const Setting = ({
                   max={type !== "number" ? "12" : "100"}
                   step="1"
                   onChange={(e) => {
-                    setRange(+e.target.value);
-                    proposallength > range &&
-                      setproposallength(+e.target.value);
+                    setRange(e.target.value);
+                    proposallength > range && setproposallength(e.target.value);
                   }}
                 />
               </div>
@@ -152,10 +171,9 @@ const Setting = ({
                   name="Length"
                   value={proposallength}
                   min="1"
-                  // max={type !== "number" ? "10" : "100"}
                   max={range}
                   step="1"
-                  onChange={(e) => setproposallength(+e.target.value)}
+                  onChange={(e) => setproposallength(e.target.value)}
                 />
               </div>
             </div>
@@ -176,6 +194,7 @@ Setting.propTypes = {
   setOperator: PropTypes.func,
   operator: PropTypes.string,
   winCounter: PropTypes.number,
+  gamesStatus: PropTypes.bool,
 };
 
 export default Setting;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { uid } from "uid"; //pre-requis : npm install uid
 import numberTable from "./numberTable";
-import { Fireworks } from 'fireworks-js'
+import { Fireworks } from "fireworks-js";
 
 function PlayArea({
   range,
@@ -12,213 +12,303 @@ function PlayArea({
   type,
   winCounter,
   setWinCounter,
-  setRange,
-  setType,
-  setOperator,  
-  setproposallength,
+  gamesStatus,
+  setGameStatus,
 }) {
-    const [otherProposalState, setotherProposalState] = useState([]);
-    const [numberDeltaState, setNumberDeltaState] = useState(0);
-    const [finalNumberState, setfinalNumberState] = useState(0);
-    const [numberToGuessState, setnumberToGuessState] = useState(0);
-    const [playerchoicednumber, setplayerchoicednumber] = useState("?");
+  const [otherProposalState, setotherProposalState] = useState([]);
+  const [numberDeltaState, setNumberDeltaState] = useState(0);
+  const [finalNumberState, setfinalNumberState] = useState(0);
+  const [numberToGuessState, setnumberToGuessState] = useState(0);
+  const [playerchoicednumber, setplayerchoicednumber] = useState("?");
+  const [joker1, setJoker1] = useState(true);
+  const [joker2, setJoker2] = useState(true);
+  const [joker3, setJoker3] = useState(true);
 
+  //add condition if > 1 on actual table lengh
 
-
-    function FireWorkFunction() {
-      const container = document.querySelector('.game1')
-      const fireworks = new Fireworks(container, { /* options */ })
-      fireworks.start()
-      setWinCounter(undefined)
-      setType(undefined)
-      setOperator(undefined)
-      setproposallength(7)
-      setRange(7)
-      setfinalNumberState(0);
-      setnumberToGuessState(0);
-      setNumberDeltaState(0);
-      setotherProposalState(0);
-        setTimeout(() => {
-          fireworks.stop()
-      },10000)
-
+  function joker() {
+    const tempoOtherproposal = otherProposalState;
+    const tempoOtherproposalLength = tempoOtherproposal.length;
+    if (tempoOtherproposalLength > 1) {
+      const newtablelength = Math.ceil(tempoOtherproposalLength / 2);
+      for (let i = 0; i < newtablelength; i++) {
+        const rdmsplice = Math.floor(Math.random() * newtablelength);
+        if (tempoOtherproposal[rdmsplice] != numberToGuessState) {
+          tempoOtherproposal.splice(rdmsplice, 1);
+        } else {
+          i--;
+        }
+      }
+      console.log(tempoOtherproposal);
+      setotherProposalState(tempoOtherproposal);
+      console.log("fin useffect");
     }
+  }
 
-    function calcul() {
-      let otherproposal = [];
-      setplayerchoicednumber("?");
+  function FireWorkFunction() {
+    const container = document.querySelector(".game1");
+    const fireworks = new Fireworks(container, {
+      autoresize: true,
+      /* options */
+    });
+    fireworks.start();
+    // setWinCounter(undefined);
+    // setType(undefined);
+    // setOperator(undefined);
+    // setproposallength(7);
+    // setRange(7);
+    // setfinalNumberState(0);
+    // setnumberToGuessState(0);
+    // setNumberDeltaState(0);
+    // setotherProposalState(0);
+    // setTimeout(() => {
+    //   fireworks.stop();
+    //   fireworks.clear();
+    //   window.location.reload(false);
+    // }, 10000);
+  }
 
-      // ici on calcul les valeurs du jeu (de manière aléatoire mais selon range choisi par l'utilisateur via la difficulté)
+  function handleClickNewGame() {
+    // fireworks.stop();
+    // fireworks.clear();
+    window.location.reload(false);
+  }
 
-      let numberDelta = 0;
-      let finalNumber = 0;
-      let numberToGuess = 0;
+  function calcul() {
+    setGameStatus(true);
+    let otherproposal = [];
+    setplayerchoicednumber("?");
 
-      do {
+    // ici on calcul les valeurs du jeu (de manière aléatoire mais selon range choisi par l'utilisateur via la difficulté)
+
+    let numberDelta = 0;
+    let finalNumber = 0;
+    let numberToGuess = 0;
+
+    do {
       finalNumber = Math.ceil(Math.random() * range); //Exemple 10
     } while (finalNumber <= 1); //Exemple 4
-      console.log("début calcul nombre (final number, nomber to guess")
-      if (operator === "+") {
-        
-        console.log("finalNumber : " + finalNumber)
-        do {
-          numberToGuess = Math.ceil(Math.random() * range);
-          console.log("numberToGuess :" + numberToGuess)
-        } while (numberToGuess > finalNumber); //Exemple 4
-        numberDelta = finalNumber - numberToGuess; // Exemple 6
-      } else if (operator === "-") {
-        numberDelta = Math.ceil(Math.random() * range); //Exemple 20
-        do {
-          numberDelta = Math.ceil(Math.random() * range);
-        } while (numberDelta < finalNumber);
-        numberToGuess = numberDelta - finalNumber;
-      }
-      console.log("fin calcul nombre (final number, nomber to guess")
-     
+    console.log("début calcul nombre (final number, nomber to guess");
+    if (operator === "+") {
+      console.log("finalNumber : " + finalNumber);
+      do {
+        numberToGuess = Math.ceil(Math.random() * range);
+        console.log("numberToGuess :" + numberToGuess);
+      } while (numberToGuess > finalNumber); //Exemple 4
+      numberDelta = finalNumber - numberToGuess; // Exemple 6
+    } else if (operator === "-") {
+      numberDelta = Math.ceil(Math.random() * range); //Exemple 20
+      do {
+        numberDelta = Math.ceil(Math.random() * range);
+      } while (numberDelta < finalNumber);
+      numberToGuess = numberDelta - finalNumber;
+    }
+    console.log("fin calcul nombre (final number, nomber to guess");
 
-      // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
-      
-      console.log("debut boucle tableau otherproposal");
-      for (let i = 0; i < proposallength; i++) {
-        let number = Math.ceil(Math.random() * range);
-        const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
-        if (check) {
-          i--; //si déjà présent alors on refait un tour de plus (et on ne met pas le chiffre trouvé dans le tableau )
-        } else {
-          otherproposal.push(number); //sinon, on met ce nouveau chiffre dans le tableau
-        }
-      }
-      console.log("Fin boucle tableau otherproposal");
+    // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
 
-      const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
-      if (!check) {
-        const randomsplice = Math.ceil(Math.random() * (proposallength - 1)); //on détermine un nombre aléatoire (dans la plage de la longeur des choix). le -1 car l'index des tableau commence à 0
-        otherproposal.splice(randomsplice, 1, numberToGuess); // on retire une des propositions aélatoire du tableau pour y intégrer notre solution
+    console.log("debut boucle tableau otherproposal");
+    for (let i = 0; i < proposallength; i++) {
+      let number = Math.ceil(Math.random() * range);
+      const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
+      if (check) {
+        i--; //si déjà présent alors on refait un tour de plus (et on ne met pas le chiffre trouvé dans le tableau )
+      } else {
+        otherproposal.push(number); //sinon, on met ce nouveau chiffre dans le tableau
       }
+    }
+    console.log("Fin boucle tableau otherproposal");
 
-      setfinalNumberState(finalNumber);
-      setnumberToGuessState(numberToGuess);
-      setNumberDeltaState(numberDelta);
-      setotherProposalState(otherproposal);
+    const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
+    if (!check) {
+      const randomsplice = Math.ceil(Math.random() * (proposallength - 1)); //on détermine un nombre aléatoire (dans la plage de la longeur des choix). le -1 car l'index des tableau commence à 0
+      otherproposal.splice(randomsplice, 1, numberToGuess); // on retire une des propositions aélatoire du tableau pour y intégrer notre solution
     }
 
-    useEffect(() => {
-      if (playerchoicednumber == numberToGuessState) {
-        if (winCounter === undefined) {
-          setWinCounter(1);
+    setfinalNumberState(finalNumber);
+    setnumberToGuessState(numberToGuess);
+    setNumberDeltaState(numberDelta);
+    setotherProposalState(otherproposal);
+  }
+
+  // function btnjoker1() {
+  //   setJoker1(false);
+  // }
+
+  useEffect(() => {
+    if (playerchoicednumber == numberToGuessState) {
+      if (winCounter === undefined) {
+        setWinCounter(1);
+      } else {
+        setWinCounter(winCounter + 1);
+        if (winCounter < 4) {
+          setTimeout(() => {
+            calcul();
+            setplayerchoicednumber("?");
+          }, 1000);
         } else {
-          setWinCounter(winCounter + 1);
-            if(winCounter<4) {
-              setTimeout(() => {
-                calcul();
-                setplayerchoicednumber("?");
-              }, 1000);
-            }
-            else {
-              FireWorkFunction()  
-             }
+          FireWorkFunction();
+          setGameStatus(false);
         }
       }
-    }, [playerchoicednumber, numberToGuessState]);
+    }
+  }, [playerchoicednumber, numberToGuessState]);
 
   function scoreBoard(element) {
-   
-      setplayerchoicednumber(element);
+    setplayerchoicednumber(element);
   }
 
   return (
-   
-    <div className="playArea">
-      {operator && type && (winCounter === undefined) && (
-        <div className="PlayBtnArea">
-          <button
-            type="button"
-            className="btnStyle1 boucing"
-            onClick={() => {
-              setWinCounter(0);
-              calcul();
-            }}
-          >
-            PLAY
-          </button>
-        </div>
-      )}
-      {numberToGuessState != 0 && (
-        <div className="calculArea">
-          <div className="topArea">
-            <button type="button" className="btnStyle1">
-              {numberDeltaState}
+    <>
+      <div className="JokerArea">
+        {gamesStatus && joker1 && (
+          <div className="Button">
+            <button
+              className="btnStyle1"
+              type="button"
+              onClick={() => {
+                joker(), setJoker1(false);
+              }}
+            >
+              {" "}
+              Joker 1
             </button>
           </div>
-          <div className="operator topArea">
-            <button type="button" className="btnStyle1">
-              {operator}
+        )}
+        {gamesStatus && joker2 && (
+          <div className="Button">
+            <button
+              className="btnStyle1"
+              type="button"
+              onClick={() => {
+                joker(), setJoker2(false);
+              }}
+            >
+              {" "}
+              Joker 2
             </button>
           </div>
-          <div className="topArea">
+        )}
+        {gamesStatus && joker3 && (
+          <div className="Button">
+            <button
+              className="btnStyle1"
+              type="button"
+              onClick={() => {
+                joker(), setJoker3(false);
+              }}
+            >
+              {" "}
+              Joker 3
+            </button>
+          </div>
+        )}
+      </div>
+      <div className="playArea">
+        {operator && type && winCounter === undefined && (
+          <div className="PlayBtnArea over">
             <button
               type="button"
-              className={
-                playerchoicednumber == "?"
-                  ? "btnStyle3"
-                  : playerchoicednumber == numberToGuessState
-                  ? "rightAsnwer btnStyle1"
-                  : "badAnswer btnStyle1"
-              }
+              className="btnStyle1 boucing"
+              onClick={() => {
+                setWinCounter(0);
+                calcul();
+              }}
             >
-              {playerchoicednumber}
+              PLAY
             </button>
           </div>
-          <div className="topArea">
-            <button type="button" className="btnStyle1">
-              =
+        )}
+        {!gamesStatus && numberToGuessState !== 0 && (
+          <div className="PlayBtnArea over">
+            <button
+              type="button"
+              className="btnStyle1 boucing"
+              onClick={() => {
+                handleClickNewGame();
+              }}
+            >
+              PLAY AGAIN ?
             </button>
           </div>
-          <div className="topArea">
-            <button type="button" className="btnStyle1">
-              {finalNumberState}
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="choiceNumberArea">
-
-        {otherProposalState != 0 && otherProposalState.map((element) => {
-          return (
-            <div key={uid(10)}>
-              {type != "image" && (
-                <div className="numberChoiceButton">
-                  <button
-                    className="btnStyle1"
-                    type="button"
-                    value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
-                    onClick={() => scoreBoard(element)}
-                  >
-                    {type === "number"
-                      ? element
-                      : type === "letter" && numberTable[element-1].numberText}
-                  </button>
-                </div>
-              )}
-              {type === "image" && (
-                <div className="numberimagecontainer">
-                  <img
-                    onClick={() => scoreBoard(element)}
-                    className="numberimage"
-                    src={numberTable[element-1].numberImg}
-                    alt=""
-                  />
-                </div>
-              )}
+        )}
+        {numberToGuessState != 0 && gamesStatus && (
+          <div className="calculArea">
+            <div className="topArea">
+              <button type="button" className="btnStyle1">
+                {numberDeltaState}
+              </button>
             </div>
-          );
-        })}
+            <div className="operator topArea">
+              <button type="button" className="btnStyle1">
+                {operator}
+              </button>
+            </div>
+            <div className="topArea">
+              <button
+                type="button"
+                className={
+                  playerchoicednumber == "?"
+                    ? "btnStyle3"
+                    : playerchoicednumber == numberToGuessState
+                    ? "rightAsnwer btnStyle1"
+                    : "badAnswer btnStyle1"
+                }
+              >
+                {playerchoicednumber}
+              </button>
+            </div>
+            <div className="topArea">
+              <button type="button" className="btnStyle1">
+                =
+              </button>
+            </div>
+            <div className="topArea">
+              <button type="button" className="btnStyle1">
+                {finalNumberState}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="choiceNumberArea">
+          {otherProposalState != 0 &&
+            gamesStatus &&
+            otherProposalState.map((element) => {
+              return (
+                <div key={uid(10)}>
+                  {type != "image" && (
+                    <div className="numberChoiceButton">
+                      <button
+                        className="btnStyle1"
+                        type="button"
+                        value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
+                        onClick={() => scoreBoard(element)}
+                      >
+                        {type === "number"
+                          ? element
+                          : type === "letter" &&
+                            numberTable[element - 1].numberText}
+                      </button>
+                    </div>
+                  )}
+                  {type === "image" && (
+                    <div className="numberimagecontainer">
+                      <img
+                        onClick={() => scoreBoard(element)}
+                        className="numberimage"
+                        src={numberTable[element - 1].numberImg}
+                        alt=""
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+        </div>
       </div>
-    </div>
-   
+    </>
   );
- 
 }
 
 PlayArea.propTypes = {
@@ -232,6 +322,8 @@ PlayArea.propTypes = {
   setType: PropTypes.func,
   setproposallength: PropTypes.func,
   setOperator: PropTypes.func,
+  gamesStatus: PropTypes.bool,
+  setGameStatus: PropTypes.func,
 };
 
 export default PlayArea;

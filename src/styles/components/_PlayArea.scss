@@ -1,60 +1,130 @@
-.playArea {
-  width: 100%;
-  height: 100%;
+.playAreaComponent {
   display: flex;
-  justify-content: flex-start;
+  width: 100vw;
   align-items: center;
-  flex-direction: column;
-  justify-self: center;
+  // justify-content: space-between;
 
-  .PlayBtnArea {
-    margin-top: 5vw;
-    margin-left: 25px;
+  .btnHomeContainer {
+    position: absolute;
+    top: 10vh;
+    right: 10vw;
+    height: 100px;
+    width: 100px;
 
-    .boucing {
-      animation: myAnim 2s linear 0s 1 normal forwards;
+    // box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    //   inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    // border-radius: 50%;
+    &:hover {
+      content: url("/images/homeHover.png");
+      cursor: pointer;
+    }
+
+    img {
+      height: 100px;
+      width: 100px;
     }
   }
 
-  .calculArea {
-    margin-top: 7vw;
+  .JokerArea {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    position: absolute;
+    margin-left: 10px;
 
-    .topArea {
-      margin-right: 25px;
-
-      .rightAsnwer {
-        background-color: green;
+    .jokerImageContainer {
+      &:hover {
+        cursor: pointer;
       }
-
-      .badAnswer {
-        background-color: red;
-      }
-    }
-  }
-
-  .choiceNumberArea {
-    margin-top: 7vw;
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-    justify-content: center;
-
-    .numberChoiceButton {
-      margin: 10px;
-    }
-    .numberimage {
-      margin: 5px;
-      width: 150px;
-      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px;
+      width: 125px;
+      height: 125px;
+      padding: 10px;
       border-radius: 10px;
-      background-color: rgb(63, 125, 167);
+      background-color: #ffffff;
       box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
         inset -2px -2px 3px rgba(0, 0, 0, 0.6);
-
       &:hover {
-        background-color: var(--main-color);
+        background-color: #19667a;
+      }
+
+      .jokerImage {
+        width: 80%;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .Button {
+      margin: 15px;
+    }
+  }
+
+  .playArea {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    justify-self: center;
+
+    .PlayBtnArea {
+      margin-top: 5vw;
+      // margin-left: 25px;
+
+      .boucing {
+        animation: myAnim 2s linear 0s 1 normal forwards;
+      }
+    }
+
+    .calculArea {
+      margin-top: 7vw;
+      display: flex;
+      justify-content: space-between;
+
+      .topArea:not(:last-child) {
+        margin-right: 25px;
+
+        .rightAsnwer {
+          background-color: green;
+        }
+
+        .badAnswer {
+          background-color: red;
+        }
+      }
+    }
+
+    .choiceNumberArea {
+      margin-top: 6vw;
+      display: flex;
+      flex-wrap: wrap;
+      width: 70%;
+      justify-content: center;
+
+      .numberChoiceButton {
+        margin: 10px;
+      }
+      .numberimage {
+        &:hover {
+          cursor: pointer;
+        }
+        filter: grayscale(15%);
+        margin: 5px;
+        width: 150px;
+        height: 180px;
+        border-radius: 10px;
+        background-color: #3f7da7;
+        box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+          inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+
+        &:hover {
+          background-color: var(--main-color);
+        }
       }
     }
   }
@@ -89,5 +159,72 @@
 
   90% {
     transform: rotate(2deg);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .playAreaComponent {
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 13px;
+
+    .btnHomeContainer {
+      align-self: flex-start;
+      position: initial;
+      margin-bottom: 13px;
+      margin-left: 25px;
+      width: 100%;
+      height: 50px;
+      width: 50px;
+
+      img {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .JokerArea {
+      flex-direction: row;
+      position: initial;
+      justify-content: center;
+
+      .jokerImageContainer {
+        margin: 5px;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .playArea {
+      margin-left: 10px;
+      margin-right: 10px;
+      justify-content: center;
+
+      .PlayBtnArea {
+        margin-left: 7vh;
+      }
+      .calculArea {
+        // margin-top: 8vh;
+        // margin-bottom: 6vh;
+
+        .topArea:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+      .choiceNumberArea {
+        width: 100%;
+
+        .numberimagecontainer {
+          .numberimage {
+            width: 90px;
+            height: 105px;
+          }
+        }
+
+        .numberChoiceButton {
+          margin: 5px;
+        }
+      }
+    }
   }
 }

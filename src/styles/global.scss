@@ -21,6 +21,10 @@
   z-index: 1;
 }
 
+.minWidth {
+  min-width: 7vw;
+}
+
 .btnStyle1 {
   &:hover {
     cursor: pointer;
@@ -118,5 +122,9 @@
   }
   .smallSize {
     font-size: 1rem;
+  }
+
+  .minWidth {
+    min-width: 25vw;
   }
 }

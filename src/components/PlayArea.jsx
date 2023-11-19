@@ -72,7 +72,6 @@ function PlayArea({
     do {
       finalNumber = Math.ceil(Math.random() * range); //Exemple 10
     } while (finalNumber <= 1); //Exemple 4
-    console.log("début calcul nombre (final number, nomber to guess");
     if (operator === "+") {
       do {
         numberToGuess = Math.ceil(Math.random() * range);
@@ -103,11 +102,9 @@ function PlayArea({
         console.log(Number.isInteger(numberToGuess));
       } while (!Number.isInteger(numberToGuess));
     }
-    console.log("fin calcul nombre (final number, nomber to guess");
 
     // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
 
-    console.log("debut boucle tableau otherproposal");
     for (let i = 0; i < proposallength; i++) {
       let number = Math.ceil(Math.random() * range);
       const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
@@ -117,7 +114,6 @@ function PlayArea({
         otherproposal.push(number); //sinon, on met ce nouveau chiffre dans le tableau
       }
     }
-    console.log("Fin boucle tableau otherproposal");
 
     const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
     if (!check) {
@@ -209,10 +205,10 @@ function PlayArea({
         </div>
         <div className="playArea">
           {operator && type && winCounter === undefined && (
-            <div className="PlayBtnArea over">
+            <div className="PlayBtnArea over left">
               <button
                 type="button"
-                className="btnStyle1 boucing"
+                className="btnStyle1 boucing "
                 onClick={() => {
                   setWinCounter(0);
                   calcul();
@@ -238,12 +234,12 @@ function PlayArea({
           {numberToGuessState != 0 && gamesStatus && (
             <div className="calculArea">
               <div className="topArea">
-                <button type="button" className="btnStyle1">
+                <button type="button" className="btnStyle1 choiceBtnsize">
                   {numberDeltaState}
                 </button>
               </div>
               <div className="operator topArea">
-                <button type="button" className="btnStyle1">
+                <button type="button" className="btnStyle1 choiceBtnsize">
                   {operator}
                 </button>
               </div>
@@ -252,10 +248,10 @@ function PlayArea({
                   type="button"
                   className={
                     playerchoicednumber == "?"
-                      ? "btnStyle3"
+                      ? "btnStyle3 choiceBtnsize"
                       : playerchoicednumber == numberToGuessState
-                      ? "rightAsnwer btnStyle1"
-                      : "badAnswer btnStyle1"
+                      ? "rightAsnwer btnStyle1 choiceBtnsize"
+                      : "badAnswer btnStyle1 choiceBtnsize"
                   }
                 >
                   {playerchoicednumber}
@@ -263,53 +259,54 @@ function PlayArea({
                 </button>
               </div>
               <div className="topArea">
-                <button type="button" className="btnStyle1">
+                <button type="button" className="btnStyle1 choiceBtnsize">
                   =
                 </button>
               </div>
               <div className="topArea">
-                <button type="button" className="btnStyle1">
+                <button type="button" className="btnStyle1 choiceBtnsize">
                   {finalNumberState}
                 </button>
               </div>
             </div>
           )}
+          <div className="choiceNumberAreaContainer" id="style-7">
+            <div className="choiceNumberArea">
+              {otherProposalState != 0 &&
+                gamesStatus &&
+                otherProposalState.map((element) => {
+                  return (
+                    <div key={uid(10)}>
+                      {type != "image" && (
+                        <div className="numberChoiceButton">
+                          <button
+                            className="btnStyle1 choiceBtnsize"
+                            type="button"
+                            value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
+                            onClick={() => scoreBoard(element)}
+                          >
+                            {type === "number"
+                              ? Math.round(element * 100) / 100
+                              : type === "letter" &&
+                                numberTable[element - 1].numberText}
+                          </button>
+                        </div>
+                      )}
 
-          <div className="choiceNumberArea">
-            {otherProposalState != 0 &&
-              gamesStatus &&
-              otherProposalState.map((element) => {
-                return (
-                  <div key={uid(10)}>
-                    {type != "image" && (
-                      <div className="numberChoiceButton">
-                        <button
-                          className="btnStyle1"
-                          type="button"
-                          value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
-                          onClick={() => scoreBoard(element)}
-                        >
-                          {type === "number"
-                            ? Math.round(element * 100) / 100
-                            : type === "letter" &&
-                              numberTable[element - 1].numberText}
-                        </button>
-                      </div>
-                    )}
-
-                    {type === "image" && (
-                      <div className="numberimagecontainer">
-                        <img
-                          onClick={() => scoreBoard(element)}
-                          className="numberimage"
-                          src={numberTable[element - 1].numberImg}
-                          alt=""
-                        />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      {type === "image" && (
+                        <div className="numberimagecontainer">
+                          <img
+                            onClick={() => scoreBoard(element)}
+                            className="numberimage"
+                            src={numberTable[element - 1].numberImg}
+                            alt=""
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

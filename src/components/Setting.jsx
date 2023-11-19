@@ -45,8 +45,8 @@ const Setting = ({
               type="button"
               className={
                 type === "number"
-                  ? "btnNumber btnStyle2 smallSize"
-                  : "btnNumber btnStyle1 smallSize"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="number"
               onClick={(e) => handleChoiceType(e)}
@@ -57,8 +57,8 @@ const Setting = ({
               type="button"
               className={
                 type === "letter"
-                  ? "btnNumber btnStyle2 smallSize"
-                  : "btnNumber btnStyle1 smallSize"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="letter"
               onClick={(e) => handleChoiceType(e)}
@@ -69,8 +69,8 @@ const Setting = ({
               type="button"
               className={
                 type === "image"
-                  ? "btnNumber btnStyle2 smallSize"
-                  : "btnNumber btnStyle1 smallSize"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="image"
               onClick={(e) => handleChoiceType(e)}

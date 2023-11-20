@@ -159,7 +159,11 @@ function PlayArea({
               handleClickNewGame();
             }}
           >
-            <img className="btnHome" src="./images/home.png" alt="" />
+            <img
+              className="btnHome"
+              src="./images/HomeButtonBlank.png"
+              alt=""
+            />
           </div>
         )}
         <div className="JokerArea">

@@ -19,7 +19,7 @@ const signUpPage = () => {
         </form>
         <div className="signUp">
           <p>Already have an account ?</p>
-                    <NavLink to="/">
+          <NavLink to="/">
             <p className="colored"> Login here </p>
           </NavLink>
         </div>

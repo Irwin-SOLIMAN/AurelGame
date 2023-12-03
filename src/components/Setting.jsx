@@ -1,7 +1,7 @@
 // import DifficultyArea from "../components/DifficultyArea";
 // import { useState } from "react";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Setting = ({
   setRange,
@@ -34,6 +34,16 @@ const Setting = ({
   function handleChoiceOperator(e) {
     setOperator(e.target.value);
   }
+
+  const [dbUsers, setDbUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/users")
+      .then((response) => response.json())
+      .then((res) => setDbUsers(res));
+  }, []);
+
+  console.log(dbUsers);
 
   return (
     <>

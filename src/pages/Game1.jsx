@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PlayArea from "../components/PlayArea";
 import Setting from "../components/Setting";
-import { motion, animate } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Game1 = () => {
   const [range, setRange] = useState(7);

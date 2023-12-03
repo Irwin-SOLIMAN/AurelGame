@@ -1,18 +1,17 @@
 .Setting {
-    display:flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-size: 1.3rem;
 
-    color : white;
-    
-    margin-bottom:25px;
-    margin-left: 10px;
-    margin-right: 0px;
-    margin-top: 25px;
-    
-    background:
-    linear-gradient(to right, white 4px, transparent 4px) 0 0,
+  color: white;
+
+  margin-bottom: 25px;
+  margin-left: 10px;
+  margin-right: 0px;
+  margin-top: 25px;
+
+  background: linear-gradient(to right, white 4px, transparent 4px) 0 0,
     linear-gradient(to right, white 4px, transparent 4px) 0 100%,
     linear-gradient(to left, white 4px, transparent 4px) 100% 0,
     linear-gradient(to left, white 4px, transparent 4px) 100% 100%,
@@ -20,25 +19,45 @@
     linear-gradient(to bottom, white 4px, transparent 4px) 100% 0,
     linear-gradient(to top, white 4px, transparent 4px) 0 100%,
     linear-gradient(to top, white 4px, transparent 4px) 100% 100%;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-  
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
 
-    .Type, .Operator, .Range, .Length{
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        align-items: center;
+  .Type,
+  .Operator,
+  .Range,
+  .Length {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
 
-        div, button{
-            margin:10px;
-        }
-
-        label{
-            margin: 10px;
-        }
-        
+    div,
+    button {
+      margin: 10px;
     }
 
+    input:hover {
+      cursor: pointer;
+    }
 
+    label {
+      margin: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .Setting {
+    .Type,
+    .Operator,
+    .Range,
+    .Length {
+      padding: 10x;
+
+      div,
+      button {
+        margin: 3px;
+      }
+    }
+  }
 }

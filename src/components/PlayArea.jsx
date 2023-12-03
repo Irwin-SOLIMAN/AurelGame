@@ -46,31 +46,15 @@ function PlayArea({
   }
 
   function FireWorkFunction() {
-    const container = document.querySelector(".game1");
+    const container = document.querySelector(".centerArea");
     const fireworks = new Fireworks(container, {
       autoresize: true,
       /* options */
     });
     fireworks.start();
-    // setWinCounter(undefined);
-    // setType(undefined);
-    // setOperator(undefined);
-    // setproposallength(7);
-    // setRange(7);
-    // setfinalNumberState(0);
-    // setnumberToGuessState(0);
-    // setNumberDeltaState(0);
-    // setotherProposalState(0);
-    // setTimeout(() => {
-    //   fireworks.stop();
-    //   fireworks.clear();
-    //   window.location.reload(false);
-    // }, 10000);
   }
 
   function handleClickNewGame() {
-    // fireworks.stop();
-    // fireworks.clear();
     window.location.reload(false);
   }
 
@@ -84,30 +68,43 @@ function PlayArea({
     let numberDelta = 0;
     let finalNumber = 0;
     let numberToGuess = 0;
-
+    //rappel : while loop only runs if its condition is true
     do {
       finalNumber = Math.ceil(Math.random() * range); //Exemple 10
     } while (finalNumber <= 1); //Exemple 4
-    console.log("début calcul nombre (final number, nomber to guess");
     if (operator === "+") {
-      console.log("finalNumber : " + finalNumber);
       do {
         numberToGuess = Math.ceil(Math.random() * range);
-        console.log("numberToGuess :" + numberToGuess);
       } while (numberToGuess > finalNumber); //Exemple 4
       numberDelta = finalNumber - numberToGuess; // Exemple 6
     } else if (operator === "-") {
-      numberDelta = Math.ceil(Math.random() * range); //Exemple 20
       do {
+        finalNumber = Math.ceil(Math.random() * range);
         numberDelta = Math.ceil(Math.random() * range);
-      } while (numberDelta < finalNumber);
-      numberToGuess = numberDelta - finalNumber;
+        numberToGuess = numberDelta - finalNumber;
+      } while (numberToGuess <= 0);
+    } else if (operator === "*") {
+      do {
+        finalNumber = Math.ceil(Math.random() * range);
+        numberDelta = Math.ceil(Math.random() * range);
+        numberToGuess = finalNumber / numberDelta;
+      } while (!Number.isInteger(numberToGuess) || numberDelta >= finalNumber);
+    } else if (operator === "/") {
+      do {
+        finalNumber = Math.ceil(Math.random() * range);
+        numberDelta = Math.ceil(Math.random() * range);
+        if (finalNumber !== 0) {
+          numberToGuess = numberDelta / finalNumber;
+        } else {
+          numberToGuess = 0;
+        }
+        console.log(numberToGuess);
+        console.log(Number.isInteger(numberToGuess));
+      } while (!Number.isInteger(numberToGuess));
     }
-    console.log("fin calcul nombre (final number, nomber to guess");
 
     // ici on génère le tableau ("otherproposal" des autres propositions (pour "polluer" le joueur) basé sur la longeur choisi (via la difficulté)
 
-    console.log("debut boucle tableau otherproposal");
     for (let i = 0; i < proposallength; i++) {
       let number = Math.ceil(Math.random() * range);
       const check = otherproposal.find((element) => element === number); // on vérifie si ce nombre est déjà présent dans le tableau
@@ -117,7 +114,6 @@ function PlayArea({
         otherproposal.push(number); //sinon, on met ce nouveau chiffre dans le tableau
       }
     }
-    console.log("Fin boucle tableau otherproposal");
 
     const check = otherproposal.find((element) => element === numberToGuess); // on vérifie si le nombre à deviner est déjà présent dans le tableau de proposal "unique"
     if (!check) {
@@ -131,10 +127,6 @@ function PlayArea({
     setotherProposalState(otherproposal);
   }
 
-  // function btnjoker1() {
-  //   setJoker1(false);
-  // }
-
   useEffect(() => {
     if (playerchoicednumber == numberToGuessState) {
       if (winCounter === undefined) {
@@ -144,7 +136,6 @@ function PlayArea({
         if (winCounter < 4) {
           setTimeout(() => {
             calcul();
-            setplayerchoicednumber("?");
           }, 1000);
         } else {
           FireWorkFunction();
@@ -160,151 +151,167 @@ function PlayArea({
 
   return (
     <>
-      <div className="JokerArea">
-        {gamesStatus && joker1 && (
-          <div className="Button">
-            <button
-              className="btnStyle1"
-              type="button"
-              onClick={() => {
-                joker(), setJoker1(false);
-              }}
-            >
-              {" "}
-              Joker 1
-            </button>
+      <div className="playAreaComponent">
+        {gamesStatus && (
+          <div
+            className="btnHomeContainer"
+            onClick={() => {
+              handleClickNewGame();
+            }}
+          >
+            <img
+              className="btnHome"
+              src="./images/HomeButtonBlank.png"
+              alt=""
+            />
           </div>
         )}
-        {gamesStatus && joker2 && (
-          <div className="Button">
-            <button
-              className="btnStyle1"
-              type="button"
-              onClick={() => {
-                joker(), setJoker2(false);
-              }}
-            >
-              {" "}
-              Joker 2
-            </button>
-          </div>
-        )}
-        {gamesStatus && joker3 && (
-          <div className="Button">
-            <button
-              className="btnStyle1"
-              type="button"
-              onClick={() => {
-                joker(), setJoker3(false);
-              }}
-            >
-              {" "}
-              Joker 3
-            </button>
-          </div>
-        )}
-      </div>
-      <div className="playArea">
-        {operator && type && winCounter === undefined && (
-          <div className="PlayBtnArea over">
-            <button
-              type="button"
-              className="btnStyle1 boucing"
-              onClick={() => {
-                setWinCounter(0);
-                calcul();
-              }}
-            >
-              PLAY
-            </button>
-          </div>
-        )}
-        {!gamesStatus && numberToGuessState !== 0 && (
-          <div className="PlayBtnArea over">
-            <button
-              type="button"
-              className="btnStyle1 boucing"
-              onClick={() => {
-                handleClickNewGame();
-              }}
-            >
-              PLAY AGAIN ?
-            </button>
-          </div>
-        )}
-        {numberToGuessState != 0 && gamesStatus && (
-          <div className="calculArea">
-            <div className="topArea">
-              <button type="button" className="btnStyle1">
-                {numberDeltaState}
-              </button>
+        <div className="JokerArea">
+          {gamesStatus && joker1 && (
+            <div className="jokerImageContainer">
+              <img
+                onClick={() => {
+                  joker(), setJoker1(false);
+                }}
+                className="jokerImage"
+                src="./images/wolf_head.png"
+                alt=""
+              />
+              <p>Joker 1</p>
             </div>
-            <div className="operator topArea">
-              <button type="button" className="btnStyle1">
-                {operator}
-              </button>
+          )}
+          {gamesStatus && joker2 && (
+            <div className="jokerImageContainer">
+              <img
+                onClick={() => {
+                  joker(), setJoker2(false);
+                }}
+                className="jokerImage"
+                src="./images/wolf_head.png"
+                alt=""
+              />
+              <p>Joker 2</p>
             </div>
-            <div className="topArea">
+          )}
+          {gamesStatus && joker3 && (
+            <div className="jokerImageContainer">
+              <img
+                onClick={() => {
+                  joker(), setJoker3(false);
+                }}
+                className="jokerImage"
+                src="./images/wolf_head.png"
+                alt=""
+              />
+              <p>Joker 3</p>
+            </div>
+          )}
+        </div>
+        <div className="playArea">
+          {operator && type && winCounter === undefined && (
+            <div className="PlayBtnArea over left">
               <button
                 type="button"
-                className={
-                  playerchoicednumber == "?"
-                    ? "btnStyle3"
-                    : playerchoicednumber == numberToGuessState
-                    ? "rightAsnwer btnStyle1"
-                    : "badAnswer btnStyle1"
-                }
+                className="btnStyle1 boucing "
+                onClick={() => {
+                  setWinCounter(0);
+                  calcul();
+                }}
               >
-                {playerchoicednumber}
+                PLAY
               </button>
             </div>
-            <div className="topArea">
-              <button type="button" className="btnStyle1">
-                =
+          )}
+          {!gamesStatus && numberToGuessState !== 0 && (
+            <div className="PlayBtnArea over">
+              <button
+                type="button"
+                className="btnStyle1 boucing"
+                onClick={() => {
+                  handleClickNewGame();
+                }}
+              >
+                PLAY AGAIN ?
               </button>
             </div>
-            <div className="topArea">
-              <button type="button" className="btnStyle1">
-                {finalNumberState}
-              </button>
+          )}
+          {numberToGuessState != 0 && gamesStatus && (
+            <div className="calculArea">
+              <div className="topArea">
+                <button type="button" className="btnStyle1 choiceBtnsize">
+                  {numberDeltaState}
+                </button>
+              </div>
+              <div className="operator topArea">
+                <button type="button" className="btnStyle1 choiceBtnsize">
+                  {operator}
+                </button>
+              </div>
+              <div className="topArea">
+                <button
+                  type="button"
+                  className={
+                    playerchoicednumber == "?"
+                      ? "btnStyle3 choiceBtnsize"
+                      : playerchoicednumber == numberToGuessState
+                      ? "rightAsnwer btnStyle1 choiceBtnsize"
+                      : "badAnswer btnStyle1 choiceBtnsize"
+                  }
+                >
+                  {playerchoicednumber}
+                  {/* {Math.round(parseInt(playerchoicednumber) * 100) / 100} */}
+                </button>
+              </div>
+              <div className="topArea">
+                <button type="button" className="btnStyle1 choiceBtnsize">
+                  =
+                </button>
+              </div>
+              <div className="topArea">
+                <button type="button" className="btnStyle1 choiceBtnsize">
+                  {finalNumberState}
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="choiceNumberAreaContainer" id="style-7">
+            <div className="choiceNumberArea">
+              {otherProposalState != 0 &&
+                gamesStatus &&
+                otherProposalState.map((element) => {
+                  return (
+                    <div key={uid(10)}>
+                      {type != "image" && (
+                        <div className="numberChoiceButton">
+                          <button
+                            className="btnStyle1 choiceBtnsize"
+                            type="button"
+                            value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
+                            onClick={() => scoreBoard(element)}
+                          >
+                            {type === "number"
+                              ? Math.round(element * 100) / 100
+                              : type === "letter" &&
+                                numberTable[element - 1].numberText}
+                          </button>
+                        </div>
+                      )}
+
+                      {type === "image" && (
+                        <div className="numberimagecontainer">
+                          <img
+                            onClick={() => scoreBoard(element)}
+                            className="numberimage"
+                            src={numberTable[element - 1].numberImg}
+                            alt=""
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
             </div>
           </div>
-        )}
-
-        <div className="choiceNumberArea">
-          {otherProposalState != 0 &&
-            gamesStatus &&
-            otherProposalState.map((element) => {
-              return (
-                <div key={uid(10)}>
-                  {type != "image" && (
-                    <div className="numberChoiceButton">
-                      <button
-                        className="btnStyle1"
-                        type="button"
-                        value={element} //si on est sur une image ou letter, alors l'index du tableau fait un décalage (départ à index 0)
-                        onClick={() => scoreBoard(element)}
-                      >
-                        {type === "number"
-                          ? element
-                          : type === "letter" &&
-                            numberTable[element - 1].numberText}
-                      </button>
-                    </div>
-                  )}
-                  {type === "image" && (
-                    <div className="numberimagecontainer">
-                      <img
-                        onClick={() => scoreBoard(element)}
-                        className="numberimage"
-                        src={numberTable[element - 1].numberImg}
-                        alt=""
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
         </div>
       </div>
     </>

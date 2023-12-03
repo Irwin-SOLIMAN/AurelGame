@@ -28,8 +28,21 @@ const Game1 = () => {
           setGameStatus={setGameStatus}
         />
       </div>
-      <div className="centerArea">
-        <div className="playAreaComponent">
+      {!type && (
+        <div className="startMessageContainer">
+          <div className="arrow">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div className="startMessage">
+            To start a new game, please select a type :)
+          </div>
+        </div>
+      )}
+
+      {type && (
+        <div className="centerArea">
           <PlayArea
             setRange={setRange}
             range={range}
@@ -44,25 +57,26 @@ const Game1 = () => {
             gamesStatus={gamesStatus}
             setGameStatus={setGameStatus}
           />
-        </div>
-        <div className="scoreBoard">
-          {winCounter != undefined && gamesStatus && (
-            <div className="winBarContainer">
-              <div className="levelwinBar">
-                <motion.div
-                  className="bar"
-                  animate={{
-                    width: `${winCounter * 20}%`,
-                  }}
-                  transition={{
-                    duration: 1,
-                  }}
-                />
+
+          <div className="scoreBoard">
+            {winCounter != undefined && gamesStatus && (
+              <div className="winBarContainer">
+                <div className="levelwinBar">
+                  <motion.div
+                    className="bar"
+                    animate={{
+                      width: `${winCounter * 20}%`,
+                    }}
+                    transition={{
+                      duration: 1,
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

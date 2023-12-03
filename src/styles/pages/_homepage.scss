@@ -1,0 +1,81 @@
+.homePage {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+
+  .loginArea {
+    background-color: var(--main-color);
+    color: white;
+    border: 2px solid #fdfdfd;
+    padding: 30px;
+
+    legend {
+      padding: 5px;
+      font-size: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      label {
+        width: 15vw;
+      }
+
+      input[type="text"] {
+        width: 15vw;
+        font-size: 1.5rem;
+        margin: 15px;
+      }
+
+      .forgotPassowrd {
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        text-align: center;
+        margin: 2vh 0 2vh 0;
+        width: 15vw;
+        background-color: #158d8c;
+        border-radius: 5px;
+        border: solid 1px white;
+        color: white;
+        font-size: 1.5rem;
+
+        &:hover {
+          background-color: rgb(63, 125, 167);
+          cursor: pointer;
+        }
+      }
+    }
+    .signUp {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+
+      a {
+        text-decoration: none;
+      }
+
+      p:not(:last-child) {
+        padding-right: 15px;
+      }
+    }
+
+    .colored {
+      color: #158d8c;
+
+      &:hover {
+        color: rgb(63, 125, 167);
+        cursor: pointer;
+      }
+    }
+  }
+}

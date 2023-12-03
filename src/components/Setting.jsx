@@ -1,7 +1,7 @@
 // import DifficultyArea from "../components/DifficultyArea";
 // import { useState } from "react";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Setting = ({
   setRange,
@@ -15,29 +15,15 @@ const Setting = ({
   winCounter,
   gamesStatus,
 }) => {
-  // function handleChoiceType(e) {
-  //   setType(e.target.value);
-  //   if (type != "number") {
-  //     console.log("step before", range);
-  //     if (range > 12) {
-  //       console.log("range 12 max detected", range);
-  //       setRange(12);
-  //     }
-  //     if (proposallength > 12) {
-  //       setproposallength(12);
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     // Ensure range and proposallength are within bounds
+    if (parseInt(proposallength) > parseInt(range)) {
+      setproposallength(range);
+    }
     if (type != "number") {
       if (range > 12) {
         setRange(12);
       }
-    }
-    if (proposallength > range) {
-      setproposallength(range);
     }
   }, [type, range, proposallength, setRange, setproposallength]);
 
@@ -49,6 +35,16 @@ const Setting = ({
     setOperator(e.target.value);
   }
 
+  const [dbUsers, setDbUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/users")
+      .then((response) => response.json())
+      .then((res) => setDbUsers(res));
+  }, []);
+
+  console.log(dbUsers);
+
   return (
     <>
       {winCounter === undefined && !gamesStatus && (
@@ -59,8 +55,8 @@ const Setting = ({
               type="button"
               className={
                 type === "number"
-                  ? "btnNumber btnStyle2"
-                  : "btnNumber btnStyle1"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="number"
               onClick={(e) => handleChoiceType(e)}
@@ -71,8 +67,8 @@ const Setting = ({
               type="button"
               className={
                 type === "letter"
-                  ? "btnNumber btnStyle2"
-                  : "btnNumber btnStyle1"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="letter"
               onClick={(e) => handleChoiceType(e)}
@@ -82,7 +78,9 @@ const Setting = ({
             <button
               type="button"
               className={
-                type === "image" ? "btnNumber btnStyle2" : "btnNumber btnStyle1"
+                type === "image"
+                  ? "btnNumber btnStyle2 smallSize minWidth"
+                  : "btnNumber btnStyle1 smallSize minWidth"
               }
               value="image"
               onClick={(e) => handleChoiceType(e)}
@@ -98,8 +96,8 @@ const Setting = ({
                 type="button"
                 className={
                   operator === "+"
-                    ? "btnNumber btnStyle2"
-                    : "btnNumber btnStyle1"
+                    ? "btnNumber btnStyle2 smallSize"
+                    : "btnNumber btnStyle1 smallSize"
                 }
                 value="+"
                 onClick={(e) => handleChoiceOperator(e)}
@@ -110,38 +108,42 @@ const Setting = ({
                 type="button"
                 className={
                   operator === "-"
-                    ? "btnNumber btnStyle2"
-                    : "btnNumber btnStyle1"
+                    ? "btnNumber btnStyle2 smallSize"
+                    : "btnNumber btnStyle1 smallSize"
                 }
                 value="-"
                 onClick={(e) => handleChoiceOperator(e)}
               >
                 -
               </button>
-              <button
-                type="button"
-                value="*"
-                className={
-                  operator === "*"
-                    ? "btnNumber btnStyle2"
-                    : "btnNumber btnStyle1"
-                }
-                onClick={(e) => handleChoiceOperator(e)}
-              >
-                *
-              </button>
-              <button
-                type="button"
-                value="/"
-                className={
-                  operator === "/"
-                    ? "btnNumber btnStyle2"
-                    : "btnNumber btnStyle1"
-                }
-                onClick={(e) => handleChoiceOperator(e)}
-              >
-                /
-              </button>
+              {type === "number" && (
+                <>
+                  <button
+                    type="button"
+                    value="*"
+                    className={
+                      operator === "*"
+                        ? "btnNumber btnStyle2 smallSize"
+                        : "btnNumber btnStyle1 smallSize"
+                    }
+                    onClick={(e) => handleChoiceOperator(e)}
+                  >
+                    *
+                  </button>
+                  <button
+                    type="button"
+                    value="/"
+                    className={
+                      operator === "/"
+                        ? "btnNumber btnStyle2 smallSize"
+                        : "btnNumber btnStyle1 smallSize"
+                    }
+                    onClick={(e) => handleChoiceOperator(e)}
+                  >
+                    /
+                  </button>
+                </>
+              )}
             </div>
           )}
 

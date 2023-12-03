@@ -2,14 +2,32 @@
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-image: url(./public/images/game1BackGround.jpg);
+  background-image: url("/images/game1BackGround.jpg");
   background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   overflow-x: hidden;
+
+  .startMessageContainer {
+    max-width: 50vw;
+    max-height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .startMessage {
+      padding: 12vh 0 0 4vw;
+      width: 50vh;
+      font-size: 2rem;
+      // text-align: justify;
+      color: white;
+    }
+  }
 
   .centerArea {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -31,21 +49,19 @@
       }
     }
 
+=======
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+>>>>>>> 226e3468a8206ec23f8034eab19a84e4bee3ba19
     .scoreBoard {
-      margin-top: 5vw;
+      margin-top: 4vw;
       display: flex;
       width: 100%;
       align-items: center;
       justify-content: center;
-
-      // .progressBar{
-      //         height: 20;
-      //         width: '100%';
-      //         background-color: #158D8C;
-      //         border-Radius: 50;
-      //         margin: 50;
-
-      // }
 
       .levelwinBar {
         width: 20vw;
@@ -72,6 +88,76 @@
       }
       .winBarContainer {
         border-radius: 50px;
+      }
+    }
+  }
+}
+
+.arrow {
+  transform: translate(-50%, -50%);
+  transform: rotate(90deg);
+  cursor: pointer;
+  // width: 20vh;
+  margin-left: 5vh;
+  margin-top: 12vh;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+
+.arrow span {
+  display: block;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-bottom: 5px solid white;
+  border-right: 5px solid white;
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: animate 2s infinite;
+}
+
+.arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-20px, -20px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .game1 {
+    .centerArea {
+      justify-content: flex-start;
+      .scoreBoard {
+        .levelwinBar {
+          width: 60vw;
+          height: 4vh;
+        }
+      }
+    }
+
+    .startMessageContainer {
+      .arrow span {
+        width: 3.5vw;
+        height: 3.5vw;
+      }
+      .startMessage {
+        padding: 12vh 0 0 12vw;
+        font-size: 1rem;
       }
     }
   }

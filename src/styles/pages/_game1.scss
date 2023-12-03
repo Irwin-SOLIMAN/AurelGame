@@ -27,35 +27,11 @@
   .centerArea {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-
-    .playAreaComponent {
-      display: flex;
-      width: 100%;
-      // height: 100%;
-      flex-direction: column;
-    }
-
-    .JokerArea {
-      display: flex;
-      justify-content: flex-end;
-
-      .Button {
-        margin: 15px;
-      }
-    }
-
-=======
     width: 100vw;
     height: 100vh;
     justify-content: center;
     align-items: center;
 
->>>>>>> 226e3468a8206ec23f8034eab19a84e4bee3ba19
     .scoreBoard {
       margin-top: 4vw;
       display: flex;

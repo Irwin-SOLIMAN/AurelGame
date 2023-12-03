@@ -8,11 +8,66 @@
   align-items: center;
   font-size: 1.5rem;
 
+  .authentifcationSucess {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-direction: column;
+
+    .message {
+      font-size: 5rem;
+      color: white;
+      margin-bottom: 50px;
+    }
+
+    .btnsucess {
+      &:hover {
+        cursor: pointer;
+      }
+      font-size: 2rem;
+      border: 0;
+      line-height: 2.5;
+      text-align: center;
+      justify-content: center;
+      padding: 0 20px;
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 1px 1px 1px #000;
+      border-radius: 10px;
+      background-color: rgb(63, 125, 167);
+      background-image: linear-gradient(
+        to top left,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 30%,
+        rgba(0, 0, 0, 0)
+      );
+      box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+
+      &:hover {
+        background-color: var(--main-color);
+      }
+    }
+  }
+
   .loginArea {
     background-color: var(--main-color);
     color: white;
     border: 2px solid #fdfdfd;
     padding: 30px;
+
+    .email,
+    .password {
+      display: flex;
+      align-items: center;
+    }
 
     legend {
       padding: 5px;
